@@ -1,0 +1,24 @@
+region_name       = "cn-north-4"
+availability_zone = "cn-north-4a"
+
+vpc_name          = "iac-eip-vpc"
+vpc_cidr          = "192.168.0.0/16"
+subnet_name       = "iac-eip-subnet"
+subnet_cidr       = "192.168.0.0/24"
+subnet_gateway_ip = "192.168.0.1"
+
+security_group_name = "iac-eip-sg"
+allowed_source_ip   = "你的公网IP/32" # ← 必须修改：curl -s ifconfig.me
+
+ecs_name       = "iac-eip-web"
+ecs_flavor_id  = "s6.small.1" # ← 可选：改为 ac7.large.2（2 核 4G）等
+ecs_image_name = "Huawei Cloud EulerOS 2.0"
+ecs_password   = ""
+ecs_disk_size  = 40
+ecs_disk_type  = "SSD"
+
+eip_name      = "iac-eip-web-eip"
+eip_bandwidth = 5
+
+nginx_page_title   = "Hello from IaC"                        # ← 可选：自定义页面标题
+nginx_page_content = "Nginx deployed by Terraform user_data" # ← 可选：自定义页面内容

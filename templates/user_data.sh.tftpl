@@ -1,0 +1,8 @@
+#!/bin/bash
+# 由 Terraform user_data 注入，ECS 首次启动时执行
+set -e
+(dnf install -y nginx || yum install -y nginx) >> /var/log/iac-nginx-install.log 2>&1
+cat > /usr/share/nginx/html/index.html <<'HTML'
+<h1>${title}</h1><p>${content}</p>
+HTML
+systemctl enable --now nginx

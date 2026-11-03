@@ -1,0 +1,8 @@
+# 代码归档只提交 IaC 代码：实际参数与资源状态不进仓库
+.terraform/
+*.tfvars
+!*.tfvars.example
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
