@@ -1,7 +1,8 @@
 # Web 服务：VPC → 子网 → 安全组（入站 80 仅放通指定 IP）→ EIP → ECS（user_data 安装 Nginx）→ 绑定 EIP
 
+# 只匹配标准版公共镜像，避免选中同名前缀的裸金属专用镜像（如 "... for ECS BareMetal ..."）
 data "huaweicloud_images_image" "this" {
-  name_regex   = "^${replace(var.ecs_image_name, ".", "\\.")}"
+  name_regex   = "^${replace(var.ecs_image_name, ".", "\\.")} Standard 64 bit$"
   visibility   = "public"
   architecture = "x86"
   most_recent  = true
