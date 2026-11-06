@@ -50,3 +50,30 @@ Error: error creating server: Bad request with: [POST https://ecs.cn-north-4.myh
 Plan: 2 to add, 0 to change, 0 to destroy.
 ```
 - 归档 commit：“修复镜像匹配误选裸金属镜像，plan 通过后归档”。
+
+## 6. 第二次 apply（使用归档后的代码）
+```text
+huaweicloud_compute_instance.this: Creation complete after 44s [id=b1040ab8-273d-4322-bf19-6a7fa05eb329]
+huaweicloud_compute_eip_associate.this: Creation complete after 8s [id=119.3.186.196/b1040ab8-273d-4322-bf19-6a7fa05eb329/192.168.0.16]
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+ecs_instance_id = "b1040ab8-273d-4322-bf19-6a7fa05eb329"
+ecs_private_ip = "192.168.0.16"
+ecs_public_ip = "119.3.186.196"
+security_group_id = "a42c6985-8f1e-43a1-93d1-7666f789607f"
+subnet_id = "b34f4147-7300-4d02-b466-1a6acc01d971"
+vpc_id = "33d0dd59-b217-4ef9-b430-5d110349d418"
+web_url = "http://119.3.186.196"
+```
+
+## 7. Web 服务验证
+```text
+$ curl http://119.3.186.196/
+<h1>我的IaC实践</h1><p>Nginx deployed by Terraform user_data</p>
+HTTP 200
+```
+页面由 ECS 首次启动时的 user_data（cloud-init）自动安装 Nginx 并写入，全程没有 SSH 登录。
+
+## 8. 清理
+判题通过后执行 `terraform destroy`。
